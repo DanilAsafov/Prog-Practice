@@ -1,0 +1,17 @@
+name: Main CI-pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkstyle
+        working-directory: LW-1
+        run: make check_fmt
+
+      - name: Tests
+        working-directory: LW-1
+        run: make tests
