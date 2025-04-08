@@ -5,13 +5,12 @@
 
 int sign(double b) { return (b > 0) ? -1 : 1; }
 
-QuadraticSolution solve_quadratic(double a, double b, double c) {
+QuadraticSolution solve_quadratic(double a, double b, double c, double eps) {
   QuadraticSolution result = {NULL, 0};
   if (a == 0) {
     return result;
   }
 
-  double eps = 1e-7;
   double D = b * b - 4 * a * c;
   if (D < -eps) {
     return result;

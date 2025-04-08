@@ -25,13 +25,13 @@ int check_roots(QuadraticSolution result, QuadraticSolution expected,
 }
 
 void test_1() {
-  QuadraticSolution result = solve_quadratic(0, 1, 1);
+  QuadraticSolution result = solve_quadratic(0, 1, 1, 1e-7);
   assert(result.count == 0);
   free(result.roots);
 }
 
 void test_2() {
-  QuadraticSolution result = solve_quadratic(1, 0, -1);
+  QuadraticSolution result = solve_quadratic(1, 0, -1, 1e-7);
   assert(result.count == 2);
   QuadraticSolution expected = {(double[]){-1, 1}, 2};
   assert(check_roots(result, expected, 4));
@@ -39,7 +39,7 @@ void test_2() {
 }
 
 void test_3() {
-  QuadraticSolution result = solve_quadratic(1, 0, 0);
+  QuadraticSolution result = solve_quadratic(1, 0, 0, 1e-7);
   assert(result.count == 1);
   QuadraticSolution expected = {(double[]){0}, 1};
   assert(check_roots(result, expected, 7));
@@ -47,13 +47,13 @@ void test_3() {
 }
 
 void test_4() {
-  QuadraticSolution result = solve_quadratic(1, 0, 1);
+  QuadraticSolution result = solve_quadratic(1, 0, 1, 1e-7);
   assert(result.count == 0);
   free(result.roots);
 }
 
 void test_5() {
-  QuadraticSolution result = solve_quadratic(1, 0, -1e-7);
+  QuadraticSolution result = solve_quadratic(1, 0, -1e-7, 1e-7);
   assert(result.count == 2);
   QuadraticSolution expected = {(double[]){-3e-4, 3e-4}, 2};
   assert(check_roots(result, expected, 4));
@@ -61,7 +61,7 @@ void test_5() {
 }
 
 void test_6() {
-  QuadraticSolution result = solve_quadratic(1, -1e10, -1);
+  QuadraticSolution result = solve_quadratic(1, -1e10, -1, 1e-7);
   assert(result.count == 2);
   QuadraticSolution expected = {(double[]){-1e-10, 1e10}, 2};
   assert(check_roots(result, expected, 11));
@@ -69,7 +69,7 @@ void test_6() {
 }
 
 void test_7() {
-  QuadraticSolution result = solve_quadratic(1, 0, -1e-8);
+  QuadraticSolution result = solve_quadratic(1, 0, -1e-8, 1e-7);
   assert(result.count == 1);
   QuadraticSolution expected = {(double[]){0}, 1};
   assert(check_roots(result, expected, 7));

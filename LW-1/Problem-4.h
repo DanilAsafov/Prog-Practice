@@ -9,6 +9,6 @@ typedef struct {
 } QuadraticSolution;
 
 int sign(double b);
-QuadraticSolution solve_quadratic(double a, double b, double c);
+QuadraticSolution solve_quadratic(double a, double b, double c, double eps);
 
 #endif // PROBLEM_4_H
