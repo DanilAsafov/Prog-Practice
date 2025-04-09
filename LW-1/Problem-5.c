@@ -2,9 +2,17 @@
 #include <assert.h>
 #include <math.h>
 
+#define UNPOSITIVE_NUMBER -1;
+#define REVERSED_LIMITS -2;
+
 double trapeziodal_integration(double (*f)(double), double a, double b, int n) {
-  assert(n > 0 && "Number of intervals must be positive");
-  assert(a <= b && "Integration limits are reversed");
+  if (n < 0) {
+    return UNPOSITIVE_NUMBER;
+  }
+  
+  if (a > b) {
+    return REVERSED_LIMITS;
+  }
 
   double h = (b - a) / n;
   double sum = 0.5 * (fabs(f(a)) + fabs(f(b)));

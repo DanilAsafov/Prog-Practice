@@ -11,6 +11,11 @@ bool equal(double a, double b, double precision) {
   return (fabs(a - b) < pow(10, -precision)) ? 1 : 0;
 }
 
+void test_errors() {
+  assert(trapeziodal_integration(parabola, 3, 6, -10000));
+  assert(trapeziodal_integration(parabola, 6, 3, 10000));
+}
+
 void test_parabola() {
   double result = trapeziodal_integration(parabola, 3, 6, 10000);
   double expected = 63;
@@ -36,6 +41,7 @@ void test_sqrt() {
 }
 
 int main() {
+  test_errors();
   test_parabola();
   test_hyperbole();
   test_sin();
