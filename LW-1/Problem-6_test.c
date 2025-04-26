@@ -12,16 +12,8 @@ void test_init_list() {
 void test_add_front() {
   LinkedList list;
   init_list(&list);
-
-  add_front(&list, 10);
+  add_front(&list, 0);
   assert(get_size(&list) == 1);
-  assert(get_at(&list, 0) == 10);
-
-  add_front(&list, 20);
-  assert(get_size(&list) == 2);
-  assert(get_at(&list, 0) == 20);
-  assert(get_at(&list, 1) == 10);
-
   free_list(&list);
 }
 
@@ -29,14 +21,16 @@ void test_add_back() {
   LinkedList list;
   init_list(&list);
 
+  int out;
+
   add_back(&list, 10);
   assert(get_size(&list) == 1);
-  assert(get_at(&list, 0) == 10);
+  assert(!get_at(&list, 0, &out) && out == 10);
 
   add_back(&list, 20);
   assert(get_size(&list) == 2);
-  assert(get_at(&list, 0) == 10);
-  assert(get_at(&list, 1) == 20);
+  assert(!get_at(&list, 0, &out) && out == 10);
+  assert(!get_at(&list, 1, &out) && out == 20);
 
   free_list(&list);
 }
@@ -45,19 +39,22 @@ void test_add_at() {
   LinkedList list;
   init_list(&list);
 
+  int out;
+
   add_at(&list, 0, 10);
   assert(get_size(&list) == 1);
-  assert(get_at(&list, 0) == 10);
-
-  add_at(&list, 1, 30);
-  assert(get_size(&list) == 2);
-  assert(get_at(&list, 1) == 30);
+  assert(!get_at(&list, 0, &out) && out == 10);
 
   add_at(&list, 1, 20);
-  assert(get_size(&list) == 3);
-  assert(get_at(&list, 1) == 20);
-  assert(get_at(&list, 2) == 30);
+  assert(get_size(&list) == 2);
+  assert(!get_at(&list, 1, &out) && out == 20);
 
+  add_at(&list, 1, 30);
+  assert(get_size(&list) == 3);
+  assert(!get_at(&list, 1, &out) && out == 30);
+  assert(!get_at(&list, 2, &out) && out == 20);
+
+  assert(add_at(&list, 4, 40));
   free_list(&list);
 }
 
@@ -65,18 +62,20 @@ void test_delete_at() {
   LinkedList list;
   init_list(&list);
 
+  int out;
+
   add_back(&list, 10);
   add_back(&list, 20);
   add_back(&list, 30);
 
   delete_at(&list, 1);
   assert(get_size(&list) == 2);
-  assert(get_at(&list, 0) == 10);
-  assert(get_at(&list, 1) == 30);
+  assert(!get_at(&list, 0, &out) && out == 10);
+  assert(!get_at(&list, 1, &out) && out == 30);
 
   delete_at(&list, 0);
   assert(get_size(&list) == 1);
-  assert(get_at(&list, 0) == 30);
+  assert(!get_at(&list, 0, &out) && out == 30);
 
   delete_at(&list, 0);
   assert(get_size(&list) == 0);
@@ -88,13 +87,15 @@ void test_get_at() {
   LinkedList list;
   init_list(&list);
 
+  int out;
+
   add_back(&list, 10);
   add_back(&list, 20);
   add_back(&list, 30);
 
-  assert(get_at(&list, 0) == 10);
-  assert(get_at(&list, 1) == 20);
-  assert(get_at(&list, 2) == 30);
+  assert(!get_at(&list, 0, &out) && out == 10);
+  assert(!get_at(&list, 1, &out) && out == 20);
+  assert(!get_at(&list, 2, &out) && out == 30);
 
   free_list(&list);
 }

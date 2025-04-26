@@ -2,28 +2,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define OUT_OF_BOUNDS 1;
+#define MALLOC_UNSUCCESS 2;
+
 void init_list(LinkedList *list) {
   list->head = NULL;
   list->size = 0;
 }
 
-void add_front(LinkedList *list, int data) {
+int add_front(LinkedList *list, int data) {
   Node *new_node = (Node *)malloc(sizeof(Node));
   if (!new_node) {
-    perror("malloc failed");
-    exit(EXIT_FAILURE);
+    return MALLOC_UNSUCCESS;
   }
   new_node->data = data;
   new_node->next = list->head;
   list->head = new_node;
   list->size++;
+  return 0;
 }
 
-void add_back(LinkedList *list, int data) {
+int add_back(LinkedList *list, int data) {
   Node *new_node = (Node *)malloc(sizeof(Node));
   if (!new_node) {
-    perror("malloc failed");
-    exit(EXIT_FAILURE);
+    return MALLOC_UNSUCCESS;
   }
   new_node->data = data;
   new_node->next = NULL;
@@ -38,12 +40,12 @@ void add_back(LinkedList *list, int data) {
     current->next = new_node;
   }
   list->size++;
+  return 0;
 }
 
-void add_at(LinkedList *list, int index, int data) {
+int add_at(LinkedList *list, int index, int data) {
   if (index < 0 || index > list->size) {
-    fprintf(stderr, "Index out of bounds\n");
-    exit(EXIT_FAILURE);
+    return OUT_OF_BOUNDS;
   }
   if (index == 0) {
     add_front(list, data);
@@ -56,20 +58,19 @@ void add_at(LinkedList *list, int index, int data) {
     }
     Node *new_node = (Node *)malloc(sizeof(Node));
     if (!new_node) {
-      perror("malloc failed");
-      exit(EXIT_FAILURE);
+      return MALLOC_UNSUCCESS;
     }
     new_node->data = data;
     new_node->next = prev->next;
     prev->next = new_node;
     list->size++;
   }
+  return 0;
 }
 
-void delete_at(LinkedList *list, int index) {
+int delete_at(LinkedList *list, int index) {
   if (index < 0 || index >= list->size) {
-    fprintf(stderr, "Index out of bounds\n");
-    exit(EXIT_FAILURE);
+    return OUT_OF_BOUNDS;
   }
 
   Node *to_delete;
@@ -86,19 +87,20 @@ void delete_at(LinkedList *list, int index) {
   }
   free(to_delete);
   list->size--;
+  return 0;
 }
 
-int get_at(LinkedList *list, int index) {
+int get_at(LinkedList *list, int index, int *out) {
   if (index < 0 || index >= list->size) {
-    fprintf(stderr, "Index out of bounds\n");
-    exit(EXIT_FAILURE);
+    return OUT_OF_BOUNDS;
   }
 
   Node *current = list->head;
   for (int i = 0; i < index; i++) {
     current = current->next;
   }
-  return current->data;
+  *out = current->data;
+  return 0;
 }
 
 int get_size(LinkedList *list) { return list->size; }

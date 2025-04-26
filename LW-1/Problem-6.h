@@ -12,11 +12,11 @@ typedef struct {
 } LinkedList;
 
 void init_list(LinkedList *list);
-void add_front(LinkedList *list, int data);
-void add_back(LinkedList *list, int data);
-void add_at(LinkedList *list, int index, int data);
-void delete_at(LinkedList *list, int index);
-int get_at(LinkedList *list, int index);
+int add_front(LinkedList *list, int data);
+int add_back(LinkedList *list, int data);
+int add_at(LinkedList *list, int index, int data);
+int delete_at(LinkedList *list, int index);
+int get_at(LinkedList *list, int index, int *out);
 int get_size(LinkedList *list);
 void free_list(LinkedList *list);
 
