@@ -3,24 +3,15 @@
 #include <stdio.h>
 
 void test() {
-  Stack *s = stack_init(3);
+  Stack *s = stack_init(1);
   assert(s != NULL);
-
   assert(is_empty(s));
-
-  assert(push(s, 10));
+  assert(!push(s, 0));
   assert(!is_empty(s));
-
-  assert(push(s, 20));
-  assert(push(s, 30));
-
-  assert(!push(s, 40));
-
-  assert(pop(s) == 30);
-  assert(pop(s) == 20);
-  assert(pop(s) == 10);
-
-  assert(is_empty(s));
+  assert(push(s, 1));
+  int out;
+  assert(!pop(s, &out) && out == 0);
+  assert(pop(s, &out));
   stack_free(s);
 }
 

@@ -2,16 +2,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Stack *stack_init(int capacity) {
+#define STACK_OVERFLOW 1
+#define STACK_UNDERFLOW 2
+
+Stack *stack_init(size_t capacity) {
   Stack *s = malloc(sizeof(Stack));
   if (!s) {
-    fprintf(stderr, "Error: Memory allocation failed\n");
-    exit(EXIT_FAILURE);
+    return NULL;
   }
   s->data = malloc(capacity * sizeof(int));
   if (!s->data) {
-    fprintf(stderr, "Error: Memory allocation failed\n");
-    exit(EXIT_FAILURE);
+    free(s);
+    return NULL;
   }
   s->top = -1;
   s->capacity = capacity;
@@ -21,19 +23,19 @@ Stack *stack_init(int capacity) {
 int is_empty(Stack *s) { return s->top == -1; }
 
 int push(Stack *s, int value) {
-  if (s->top >= s->capacity - 1) {
-    return 0;
+  if (s->top + 1 == s->capacity) {
+    return STACK_OVERFLOW;
   }
   s->data[++s->top] = value;
-  return 1;
+  return 0;
 }
 
-int pop(Stack *s) {
+int pop(Stack *s, int *top) {
   if (is_empty(s)) {
-    fprintf(stderr, "Error: Stack underflow\n");
-    exit(EXIT_FAILURE);
+    return STACK_UNDERFLOW;
   }
-  return s->data[s->top--];
+  *top = s->data[s->top--];
+  return 0;
 }
 
 void stack_free(Stack *s) {
