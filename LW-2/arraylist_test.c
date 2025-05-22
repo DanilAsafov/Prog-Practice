@@ -6,9 +6,8 @@
 
 int main() {
   LinearAllocator *allocator = linear_allocator_create(1024);
-
   ArrayList list;
-  arraylist_init(&list, allocator, 2);
+  arraylist_init(&list, allocator, 2, sizeof(int));
 
   int x = 10, y = 20, z = 30;
   arraylist_add(&list, &x);
@@ -18,7 +17,7 @@ int main() {
   assert(list.size == 3);
   assert(*(int *)arraylist_get(&list, 0) == 10);
 
-  arraylist_remove(&list, 1);
+  arraylist_del(&list, 1);
   assert(list.size == 2);
 
   arraylist_free(&list);
@@ -26,11 +25,11 @@ int main() {
 
   LinearAllocator *alloc1 = linear_allocator_create(256);
   ArrayList list1;
-  arraylist_init(&list1, alloc1, 3);
+  arraylist_init(&list1, alloc1, 3, sizeof(int));
 
   int a = 1, b = 2, c = 3;
   arraylist_add(&list1, &a);
-  arraylist_remove(&list1, 0);
+  arraylist_del(&list1, 0);
   arraylist_add(&list1, &b);
   arraylist_add(&list1, &c);
 
@@ -41,22 +40,22 @@ int main() {
 
   LinearAllocator *alloc2 = linear_allocator_create(64);
   ArrayList list2;
-  arraylist_init(&list2, alloc2, 2);
+  arraylist_init(&list2, alloc2, 2, sizeof(int));
 
-  arraylist_remove(&list2, 100);
+  arraylist_del(&list2, 100);
   arraylist_add(&list2, &a);
-  arraylist_remove(&list2, 1);
+  arraylist_del(&list2, 1);
   assert(list2.size == 1);
   linear_allocator_destroy(alloc2);
 
   LinearAllocator *alloc3 = linear_allocator_create(128);
   ArrayList list3;
-  arraylist_init(&list3, alloc3, 2);
+  arraylist_init(&list3, alloc3, 2, sizeof(int));
 
   arraylist_add(&list3, &a);
   arraylist_free(&list3);
 
-  arraylist_init(&list3, alloc3, 1);
+  arraylist_init(&list3, alloc3, 1, sizeof(int));
   arraylist_add(&list3, &b);
   assert(*(int *)arraylist_get(&list3, 0) == 2);
   linear_allocator_destroy(alloc3);
