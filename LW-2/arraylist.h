@@ -8,11 +8,11 @@ typedef struct {
   void **data;
   size_t size;
   size_t capacity;
-  LinearAllocator *allocator;
+  linear_allocator_t *allocator;
   size_t element_size;
 } ArrayList;
 
-void arraylist_init(ArrayList *list, LinearAllocator *allocator,
+void arraylist_init(ArrayList *list, linear_allocator_t *allocator,
                     size_t initial_capacity, size_t element_size);
 void arraylist_add(ArrayList *list, const void *element);
 void *arraylist_get(const ArrayList *list, size_t index);

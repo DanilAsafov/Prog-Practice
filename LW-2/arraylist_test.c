@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 int main() {
-  LinearAllocator *allocator = linear_allocator_create(1024);
+  linear_allocator_t *allocator = linear_allocator_create(1024);
   ArrayList list;
   arraylist_init(&list, allocator, 2, sizeof(int));
 
@@ -23,7 +23,7 @@ int main() {
   arraylist_free(&list);
   linear_allocator_destroy(allocator);
 
-  LinearAllocator *alloc1 = linear_allocator_create(256);
+  linear_allocator_t *alloc1 = linear_allocator_create(256);
   ArrayList list1;
   arraylist_init(&list1, alloc1, 3, sizeof(int));
 
@@ -38,7 +38,7 @@ int main() {
   assert(*(int *)arraylist_get(&list1, 1) == 3);
   linear_allocator_destroy(alloc1);
 
-  LinearAllocator *alloc2 = linear_allocator_create(64);
+  linear_allocator_t *alloc2 = linear_allocator_create(64);
   ArrayList list2;
   arraylist_init(&list2, alloc2, 2, sizeof(int));
 
@@ -48,7 +48,7 @@ int main() {
   assert(list2.size == 1);
   linear_allocator_destroy(alloc2);
 
-  LinearAllocator *alloc3 = linear_allocator_create(128);
+  linear_allocator_t *alloc3 = linear_allocator_create(128);
   ArrayList list3;
   arraylist_init(&list3, alloc3, 2, sizeof(int));
 

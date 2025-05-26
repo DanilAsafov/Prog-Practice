@@ -2,7 +2,7 @@
 #include "linear_allocator.h"
 #include <string.h>
 
-void arraylist_init(ArrayList *list, LinearAllocator *allocator,
+void arraylist_init(ArrayList *list, linear_allocator_t *allocator,
                     size_t initial_capacity, size_t element_size) {
   list->data = initial_capacity > 0
                    ? (void **)linear_allocator_alloc(
