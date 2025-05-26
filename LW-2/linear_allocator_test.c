@@ -5,7 +5,7 @@
 #define ALIGNMENT 8
 
 int main() {
-  LinearAllocator *allocator = linear_allocator_create(1024);
+  linear_allocator_t *allocator = linear_allocator_create(1024);
   assert(allocator != NULL);
   assert(allocator->size == 1024);
 

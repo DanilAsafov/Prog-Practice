@@ -9,8 +9,8 @@ static size_t align_forward(size_t size) {
   return (size + ALIGNMENT - 1) & ~(ALIGNMENT - 1);
 }
 
-LinearAllocator *linear_allocator_create(size_t size) {
-  LinearAllocator *allocator = malloc(sizeof(LinearAllocator));
+linear_allocator_t *linear_allocator_create(size_t size) {
+  linear_allocator_t *allocator = malloc(sizeof(linear_allocator_t));
   if (!allocator)
     return NULL;
 
@@ -25,14 +25,14 @@ LinearAllocator *linear_allocator_create(size_t size) {
   return allocator;
 }
 
-void linear_allocator_destroy(LinearAllocator *allocator) {
+void linear_allocator_destroy(linear_allocator_t *allocator) {
   if (allocator) {
     free(allocator->start);
     free(allocator);
   }
 }
 
-void *linear_allocator_alloc(LinearAllocator *allocator, size_t size) {
+void *linear_allocator_alloc(linear_allocator_t *allocator, size_t size) {
   if (!allocator || size == 0)
     return NULL;
 
@@ -46,7 +46,7 @@ void *linear_allocator_alloc(LinearAllocator *allocator, size_t size) {
   return ptr;
 }
 
-void linear_allocator_reset(LinearAllocator *allocator) {
+void linear_allocator_reset(linear_allocator_t *allocator) {
   if (allocator) {
     allocator->used = 0;
   }
